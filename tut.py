@@ -29,9 +29,14 @@ class PlayingCardDataset(Dataset):
         return self.data.classes
     
 # applies a sequence of image transformations to the data
-# tensors are 2d arrays with more functionality compared to np arrays
+# tensors are 3d arrays with more functionality compared to np arrays
 transform = transforms.Compose([transforms.Resize((128, 128)),
                                 transforms.ToTensor()
                                 ])
 dataset= PlayingCardDataset('train', transform)
-print(dataset[6000])
+image, label = dataset[6000]
+
+# dataloader allows us to use the Dataloader class to easily iterate through the dataset in batches of 32, shuffle is pulling in random
+# Tensor is transformed into a 4D array where the first element is the batch size (number of samples in each tensor)
+# purpose: model trains faster when in batches
+dataloader = DataLoader(dataset, batch_size=32, shuffle=True)
