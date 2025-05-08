@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 
-class PlayingCardDataset(dataset):
+class PlayingCardDataset(Dataset):
     # needs to know what to do when created
     def __init__(self, data_dir, transform=None):
         # utlizie imagefolder function to obtain the data from the data directory. Handles creating labels for us
@@ -27,3 +27,11 @@ class PlayingCardDataset(dataset):
     # returns the classes from the data folder
     def classes(self):
         return self.data.classes
+    
+# applies a sequence of image transformations to the data
+# tensors are 2d arrays with more functionality compared to np arrays
+transform = transforms.Compose([transforms.Resize((128, 128)),
+                                transforms.ToTensor()
+                                ])
+dataset= PlayingCardDataset('train', transform)
+print(dataset[6000])
